@@ -38,13 +38,13 @@ public class LoginServlet extends HttpServlet {
 //	private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails"
 //			+ " (password, email,) VALUES " + " (?, ?, ?);";
 
-	private static final String SELECT_USER_BY_ID = "select * from user where UserID =?";
+	private static final String SELECT_USER_BY_ID = "select * from user where userID = ?";
 	private static final String SELECT_ALL_USERS = "select * from user ";
-	private static final String DELETE_USERS_SQL = "delete from user where UserID = ?;";
+	private static final String DELETE_USERS_SQL = "delete from user where userID = ?;";
 	private static final String UPDATE_USERS_SQL = "update user set username = ?,password= ?,email =?, firstname =?, lastname =? where UserID = ?;";
 	
 	// For login SQL statement
-	private static final String LOGIN_USER_SQL = "SELECT * FROM user WHERE username =? and password =?";
+	private static final String LOGIN_USER_SQL = "SELECT * FROM user WHERE username = ? and password = ?";
 	
 	//implementing the getConnection method which facilitate connection to database via JDBC
 	protected Connection getConnection() {
@@ -104,42 +104,72 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 	
 	// for login
 	private void loginUsers(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
+		
 		HttpSession session = request.getSession();
+		
+		
 		String enterUsername = request.getParameter("username");
 		String enterPassword = request.getParameter("password");
+		System.out.println("1. Get from login form");
 		
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL);) {
+		try (Connection connection = getConnection(); 
+				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_USER_SQL);) {
+			
 			preparedStatement.setString(1, enterUsername);
 			preparedStatement.setString(2, enterPassword);
 			ResultSet rs = preparedStatement.executeQuery();
+			
 			if (rs.next()) {
 				if (rs.getString("username").equals(enterUsername)
 						&& (rs.getString("password").equals(enterPassword))) {
-					int uid = rs.getInt("UserID");
+					
+					int uid = rs.getInt("userID");
 					String username = rs.getString("username");
-					// setAttribute() is to save an object in session by assigning a unique string
-					// to the object.
-					session.setAttribute("UserID", uid);
+					System.out.println("2. Username and password correct. " + "Username = " + username + " userID = " + uid);
+					
+					// setAttribute() is to save an object in session by assigning a unique string to the object.
+					session.setAttribute("userID", uid);
+					System.out.println("3.1. Set userID in session storage");
+					
 					session.setAttribute("username", username);
+					System.out.println("3.2. Set username in session storage");
+					
 					session.setAttribute("isLoggedIn", true);
-					// getAttribute() the object stored by setAttribute method is fetched from
-					// session using getAttribute method
-					session.getAttribute("UserID");
+					System.out.println("3.3. Set isLoggedIn = True in session storage");
+					
+					// getAttribute() the object stored by setAttribute method is fetched from session using getAttribute method
+					session.getAttribute("userID");
+					System.out.println("4.1. Get userID from session storage");
+					
 					session.getAttribute("username");
+					System.out.println("4.2. Get username from session storage");
+					
 					session.getAttribute("isLoggedIn");
-					System.out.println(session.getAttribute("UserID"));
-					System.out.println(session.getAttribute("username"));
-					response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
+					System.out.println("4.3. Get isLoggedIn from session storage");
+					
+					
+					response.sendRedirect("http://localhost:8090/FinancialDiary/Register.jsp");
+					System.out.println("5. Successful Redirect");
+					//response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
 				}
 			} else {
 				System.out.println("Wrong username or password");
-				response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+				response.sendRedirect("http://localhost:8090/FinancialDiary/HomePage.jsp");
 			}
 		}
 		
@@ -157,15 +187,6 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("You are logged out");
 		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
 
-	}
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
