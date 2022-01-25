@@ -32,7 +32,6 @@
 			<version>8.0.25</version>
 		</dependency>
 
-        <!-- Dependencies to install JSTL library (login part) -->
 		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
