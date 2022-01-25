@@ -10,7 +10,6 @@
 	<description>Financial Diary Project</description>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -32,6 +31,7 @@
 			<version>8.0.25</version>
 		</dependency>
 
+        <!-- Dependencies to install JSTL library (login part)  -->
 		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
@@ -39,6 +39,8 @@
 			<version>1.2</version>
 		</dependency>
 	</dependencies>
+	
+
 
 	<build>
 		<plugins>
