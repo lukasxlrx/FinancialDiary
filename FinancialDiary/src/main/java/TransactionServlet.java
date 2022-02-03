@@ -29,59 +29,20 @@ import javax.servlet.RequestDispatcher;
 @WebServlet("/TransactionServlet")
 public class TransactionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	
-	//Step 1: Prepare list of variables used for database connections
-	 private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
-	 private String jdbcUsername = "root";
-	 private String jdbcPassword = "password";
-	 
-	 
-	//Step 2: Prepare list of SQL prepared statements to perform CRUD to our database
-	 private static final String INSERT_TRANSACTIONS_SQL 
-	 = "INSERT INTO transaction" + " (transactionid, name, price, payment, user_id) VALUES " + " (?, ?, ?, ?, ?); ";
-	 
-	 private static final String SELECT_TRANSACTIONS_BY_user_id 
-	 = "select transactionid, name, price, payment, user_id from transaction where user_id = ?";
-	 
-	 private static final String SELECT_ALL_TRANSACTIONS 
-	 = "select * from transaction";
-	 
-	 private static final String DELETE_TRANSACTIONS_SQL 
-	 = "delete from transaction where name = ?;";
-	 
-	 private static final String UPDATE_TRANSACTIONS_SQL 
-	 = "update transaction set name = ?, price= ?, payment =? where user_id = ?;";
-	 
-	 
-	//Step 3: Implement the getConnection method which facilitates connection to the database via JDBC
-	protected Connection getConnection() {
-		Connection connection = null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return connection;
-	}
-	 
 
 	// Step 1: Prepare list of variables used for database connections
 	private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "Password";
+	private String jdbcPassword = "password";
 
 	// Step 2: Prepare list of SQL prepared statements to perform CRUD to our
 	// database
 
-	private static final String INSERT_TRANSACTION_SQL = "INSERT INTO transactiondb" + " (transactionid, name, price, payment) VALUES " + " (?, ?, ?);";
-	private static final String SELECT_TRANSACTION_BY_ID = "select transactionid ,name, price, payment, user_id from transactiondb where transactionid = ?";
-	private static final String SELECT_ALL_TRANSACTION = "select * from transactiondb ";
-	private static final String DELETE_TRANSACTION_SQL = "delete from transactiondb where transactionid = ?;";
-	private static final String UPDATE_TRANSACTION_SQL = "update transactiondb set transactionid=?, name = ?, price = ?,payment = ?, user_id = ? where transactionid = ?;";
+	private static final String INSERT_TRANSACTION_SQL = "INSERT INTO transaction" + " (transactionid, name, price, payment) VALUES " + " (?, ?, ?);";
+	private static final String SELECT_TRANSACTION_BY_ID = "select transactionid ,name, price, payment, user_id from transaction where transactionid = ?";
+	private static final String SELECT_ALL_TRANSACTION = "select * from transaction ";
+	private static final String DELETE_TRANSACTION_SQL = "delete from transaction where transactionid = ?;";
+	private static final String UPDATE_TRANSACTION_SQL = "update transaction set transactionid=?, name = ?, price = ?,payment = ?, user_id = ? where transactionid = ?;";
 
 	// Step 3: Implement the getConnection method which facilitates connection to
 	// the database via JDBC
@@ -116,30 +77,6 @@ public class TransactionServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-<<<<<<< HEAD
-		
-		
-		//Step 4: Depending on the request servlet path, determine the function to invoke using the following switch statement.
-		String action = request.getServletPath();
-		try {
-			switch (action) {
-//			case "/insert":
-//				break;
-//			case "/delete":
-//				break;
-//			case "/edit":
-//				break;
-//			case "/update":
-//				break;
-			case "/TransactionServlet/dashboard":
-				listTransactions(request, response);
-				break;
-			}
-		} catch (SQLException ex) {
-			throw new ServletException(ex);
-		}
-	
-=======
 
 		// Step 4: Depending on the request servlet path, determine the function to
 		// invoke using the follow switch statement.
@@ -171,7 +108,6 @@ public class TransactionServlet extends HttpServlet {
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
 		}
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 	}
 
 	
@@ -191,53 +127,33 @@ public class TransactionServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
 		// Step 2: retrieve the four parameters from the request from the web form
-<<<<<<< HEAD
+		
 		String name = request.getParameter("name");
-		String price = request.getParameter("price");
+		int price = Integer.parseInt((request.getParameter("price")));
 		String payment = request.getParameter("payment");
-=======
-		String n = request.getParameter("name");
-		int p = Integer.parseInt((request.getParameter("price")));
-		String e = request.getParameter("payment");
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
+
 
 		// Step 3: attempt connection to database using JDBC, you can change the
 		// username and password accordingly using the phpMyAdmin > User Account
 		// dashboard
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-
-<<<<<<< HEAD
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root", "password");
-=======
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root",
-					"Password");
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
+
 
 			// Step 4: implement the sql query using prepared statement
 			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
-<<<<<<< HEAD
 			PreparedStatement ps = con.prepareStatement("insert into TRANSACTION values(?,?,?,?,?)");
-=======
-			PreparedStatement ps = con.prepareStatement("insert into transactiondb values(?,?,?,?,?)");
 
 			System.out.println("my session storage is " + session.getAttribute("userID"));
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 
 			// Step 5: parse in the data retrieved from the web form request into the
 			// prepared statement accordingly
 			ps.setInt(1, 0);
-<<<<<<< HEAD
 			ps.setString(2, name);
-			ps.setString(3, price);
+			ps.setInt(3, price);
 			ps.setString(4, payment);
-			ps.setInt(5, 1);
-=======
-			ps.setString(2, n);
-			ps.setInt(3, p);
-			ps.setString(4, e);
 			ps.setInt(5, uid);
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 
 			// Step 6: perform the query on the database using the prepared statement
 			int i = ps.executeUpdate();
@@ -247,11 +163,8 @@ public class TransactionServlet extends HttpServlet {
 
 			if (i > 0) {
 				PrintWriter writer = response.getWriter();
-<<<<<<< HEAD
-=======
 				// writer.println("<h1>" + "You have successfully registered an account!" +
 				// "</h1>");
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 				response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
 				writer.close();
 			}
@@ -262,9 +175,6 @@ public class TransactionServlet extends HttpServlet {
 			System.out.println(exception);
 			out.close();
 		}
-<<<<<<< HEAD
-		//doGet(request, response);
-=======
 		// doGet(request, response);
 	}
 
@@ -398,49 +308,8 @@ public class TransactionServlet extends HttpServlet {
 		// Step 3: redirect back to UserServlet dashboard (note: remember to change the
 		// url to your project name)
 		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
->>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 	}
-	
-	
-	
-	// Step 5: listUsers function to connect to the database and retrieve all users
-	// records
-	private void listTransactions(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		
-		List<TransactionClass> transactions = new ArrayList<>();
-		
-		try (Connection connection = getConnection();
-				
-				// Step 5.1: Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TRANSACTIONS);) {
 
-			// Step 5.2: Execute the query or update query
-			ResultSet rs = preparedStatement.executeQuery();
-
-			// Step 5.3: Process the ResultSet object.
-			while (rs.next()) {
-				int transactionid = rs.getInt("transactionid");
-				String name = rs.getString("name");
-				String price = rs.getString("price");
-				String payment = rs.getString("payment");
-				int user_id = rs.getInt("user_id");
-				
-				transactions.add(new TransactionClass(transactionid, name, price, payment, user_id));
-			}
-			
-			//System.out.println(transactionid, name, price, payment, user_id);
-			System.out.println("line 192: " + transactions);
-			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-		// Step 5.4: Set the users list into the listUsers attribute to be pass to the
-		// userManagement.jsp
-		request.setAttribute("listTransactions", transactions);
-		request.getRequestDispatcher("/Transaction.jsp").forward(request, response);
-	}
 	
 	
 	

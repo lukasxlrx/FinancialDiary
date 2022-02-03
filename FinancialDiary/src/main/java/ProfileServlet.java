@@ -25,7 +25,7 @@ public class ProfileServlet extends HttpServlet {
 	//Step 1: Prepare list of variables used for database connections
 	 private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
 	 private String jdbcUsername = "root";
-	 private String jdbcPassword = "Password";
+	 private String jdbcPassword = "password";
 	 //Step 2: Prepare list of SQL prepared statements to perform CRUD to our database
 	 private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails" + " (username, password, email, firstname, lastname) VALUES " + " (?, ?, ?, ?, ?, ?);";
 	 private static final String SELECT_USER_BY_ID = "select userID,username,password,email,firstname,lastname from User where userID =?";
