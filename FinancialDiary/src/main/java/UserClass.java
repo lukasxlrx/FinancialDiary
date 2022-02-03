@@ -1,4 +1,3 @@
-
 public class UserClass {
 	protected int UserID;
 	protected String username;

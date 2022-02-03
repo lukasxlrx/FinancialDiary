@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 
 	private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "password";
+	private String jdbcPassword = "Password";
 
 	//using email, password
 //	private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails"
@@ -163,7 +163,7 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("4.3. Get isLoggedIn from session storage");
 					
 					
-					response.sendRedirect("http://localhost:8090/FinancialDiary/Transaction.jsp");
+					response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
 					System.out.println("5. Successful Redirect");
 					//response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
 				}
