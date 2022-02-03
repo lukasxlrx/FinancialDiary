@@ -41,7 +41,7 @@
 		<div class="container">
 			<br> <a
 				href="<%=request.getContextPath()%>/CreateTransaction.jsp"
-				class="btn btn-primary">Add New item</a> <br>
+				class="btn btn-primary">Add New Transaction</a> <br>
 			<hr>
 
 			<!-- Create a table to list out all current users information -->
@@ -56,17 +56,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="users" items="${listUsers}">
+					<c:forEach var="transactions" items="${listTransactions}">
 						<!-- For each user in the database, display their information accordingly -->
 						<tr>
-							<td><c:out value="${users.name}" /></td>
-							<td><c:out value="${users.price}" /></td>
-							<td><c:out value="${users.payment}" /></td>
+							<td><c:out value="${transactions.name}" /></td>
+							<td>$<c:out value="${transactions.price}" /></td>
+							<td><c:out value="${transactions.payment}" /></td>
 							<!-- For each user in the database, Edit/Delete buttons which invokes the edit/delete functions -->
 							<td>
 								<div>
-									<a href="edit?transactionID=<c:out value='${users.transactionID}'/>">Edit</a>
-									<a href="delete?transactionID=<c:out value='${users.transactionID}'/>">Delete</a>
+									<a href="edit?transactionID=<c:out value='${transactions.transactionID}'/>">Edit</a>
+									<a href="delete?transactionID=<c:out value='${transactions.transactionID}'/>">Delete</a>
 								</div>
 							</td>
 						</tr>

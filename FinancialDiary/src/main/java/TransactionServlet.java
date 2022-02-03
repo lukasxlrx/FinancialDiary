@@ -102,7 +102,7 @@ public class TransactionServlet extends HttpServlet {
 			default:
 				System.out.println("has getting");
 			case "/TransactionServlet/dashboard":
-				listUsers(request, response);
+				listTransactions(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -180,11 +180,11 @@ public class TransactionServlet extends HttpServlet {
 
 	// Step 5: listUsers function to connect to the database and retrieve all users
 	// records
-	private void listUsers(HttpServletRequest request, HttpServletResponse response)
+	private void listTransactions(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
-		List<TransactionClass> users = new ArrayList<>();
+		List<TransactionClass> transactions = new ArrayList<>();
 		try (Connection connection = getConnection();
 
 				// Step 5.1: Create a statement using connection object
@@ -203,7 +203,7 @@ public class TransactionServlet extends HttpServlet {
 					int price = rs.getInt("price");
 					String payment = rs.getString("payment");
 					//System.out.println(TransactionID);
-					users.add(new TransactionClass(TransactionID, name, price, payment, UserID));
+					transactions.add(new TransactionClass(TransactionID, name, price, payment, UserID));
 				}
 			}
 		} catch (SQLException e) {
@@ -212,8 +212,8 @@ public class TransactionServlet extends HttpServlet {
 
 		// Step 5.4: Set the users list into the listUsers attribute to be pass to the
 		// userManagement.jsp
-		request.setAttribute("listUsers", users);
-		System.out.println(users);
+		request.setAttribute("listTransactions", transactions);
+		System.out.println(transactions);
 		request.getRequestDispatcher("/Transaction.jsp").forward(request, response);
 	}
 
