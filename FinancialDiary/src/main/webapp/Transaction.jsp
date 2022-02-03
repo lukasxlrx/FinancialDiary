@@ -22,18 +22,37 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
+<<<<<<< HEAD
 			<li style="margin-left: 175px;" class="nav-item active"><a class="nav-link" href="<%=request.getContextPath()%>/TransactionServlet/dashboard">
 			Transactions<span class="sr-only">(current)</span></a></li>
 			
 			<li class="nav-item"><a class="nav-link"
 				href="#">Profile</a></li>
+=======
+			<li style="margin-left: 175px;" class="nav-item active"><a
+				class="nav-link"
+				href="<%=request.getContextPath()%>/TransactionServlet/dashboard">
+					Transactions<span class="sr-only">(current)</span>
+			</a></li>
+
+			<li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+
+			//insert inside navbar and link to loginServlet
+			<li class="nav-item text-center"><a class="nav-link"
+				href="LoginServlet/logout">Log out</a></li>
+>>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 		</ul>
 	</div>
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 </nav>
 
 <body>
 	<div class="row">
+<<<<<<< HEAD
 		<div class="container">	
 			<br>
 			 <a
@@ -41,6 +60,13 @@
 				class="btn btn-primary">Add New item</a>
 				 <br>
 				 <hr>
+=======
+		<div class="container">
+			<br> <a
+				href="<%=request.getContextPath()%>/CreateTransaction.jsp"
+				class="btn btn-primary">Add New item</a> <br>
+			<hr>
+>>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 			<!-- Create a table to list out all current users information -->
 			<table class="table table-striped table-bordered">
 				<thead class="thead-dark">
@@ -52,6 +78,7 @@
 
 					</tr>
 				</thead>
+<<<<<<< HEAD
 				<!-- Pass in the list of users receive via the Servlet’s response to a loop -->
 
 				<tbody>
@@ -66,6 +93,25 @@
 								<div>
 									<button class="btn btn-success">Edit</button>
 									<button class="btn btn-danger">Delete</button>
+=======
+				<!-- Pass in the list of users receive via the Servletâs response to a loop -->
+
+				<tbody>
+					<c:forEach var="users" items="${listUsers}">
+						<!-- For each user in the database, display their information accordingly -->
+						<tr>
+							<td><c:out value="${users.name}" /></td>
+							<td><c:out value="${users.price}" /></td>
+							<td><c:out value="${users.payment}" /></td>
+							<!-- For each user in the database, Edit/Delete buttons which invokes the edit/delete functions -->
+							<td>
+								<div>
+									<%-- 	<button class="btn btn-success" href="TransactionServlet/edit?transactionID=<c:out value='${users.transactionID}'/>"> Edit</button> --%>
+									<a
+										href="edit?transactionID=<c:out value='${users.transactionID}'/>">Edit</a>
+									<a
+										href="delete?transactionID=<c:out value='${users.transactionID}'/>">Delete</a>
+>>>>>>> branch 'lukasBranch' of https://github.com/lukasxlrx/FinancialDiary
 								</div>
 							</td>
 						</tr>

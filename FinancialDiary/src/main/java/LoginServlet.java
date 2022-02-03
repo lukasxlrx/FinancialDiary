@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 
 	private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "password";
+	private String jdbcPassword = "Password";
 
 	//using email, password
 //	private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails"
