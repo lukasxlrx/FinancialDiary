@@ -35,5 +35,4 @@
 		<url-pattern>/TransactionServlet/update</url-pattern>
 		<url-pattern>/TransactionServlet/delete</url-pattern>
 	</servlet-mapping>
-	
 </web-app>
