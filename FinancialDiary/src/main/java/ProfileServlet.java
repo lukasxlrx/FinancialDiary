@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ProfileServlet
@@ -30,10 +31,11 @@ public class ProfileServlet extends HttpServlet {
 	 private String jdbcPassword = "password";
 	 //Step 2: Prepare list of SQL prepared statements to perform CRUD to our database
 	 private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails" + " (username, password, email, firstname, lastname) VALUES " + " (?, ?, ?, ?, ?, ?);";
-	 private static final String SELECT_USER_BY_ID = "select userID,username,password,email,firstname,lastname from User where userID =?";
-	 private static final String SELECT_ALL_USERS = "select * from User ";
-	 private static final String DELETE_USERS_SQL = "delete from User where userID = ?;";
-	 private static final String UPDATE_USERS_SQL = "update User set username = ?,password= ?, email =?,firstname =?, lastname=? where userID = ?;";
+	 private static final String SELECT_USER_BY_ID_UPDATE = "select userID,username,password,email,firstname,lastname from user where username =?";
+	 private static final String SELECT_ALL_USERS = "select * from user ";
+	 private static final String SELECT_USER_BY_ID = "select * from user where userID = ?";
+	 private static final String DELETE_USERS_SQL = "delete from user where username = ?;";
+	 private static final String UPDATE_USERS_SQL = "update user set userID = ?,username = ?,password= ?, email =?,firstname =?, lastname=? where username = ?;";
 	 //Step 3: Implement the getConnection method which facilitates connection to the database via JDBC
 	 protected Connection getConnection() {
 	 Connection connection = null;
@@ -54,11 +56,17 @@ public class ProfileServlet extends HttpServlet {
 	 private void listUsers(HttpServletRequest request, HttpServletResponse response)
 	 throws SQLException, IOException, ServletException
 	 {
+		 //Get userID from session
+		 HttpSession session = request.getSession();
+		 session.getAttribute("userID");
+		 session.getAttribute("username");
+			System.out.println("4.1. Get userID from session storage");
+		 
+		 
 	 List <UserClass> users = new ArrayList <>();
 	  try (Connection connection = getConnection();
 	  // Step 5.1: Create a statement using connection object
-	  PreparedStatement preparedStatement =
-	 connection.prepareStatement(SELECT_ALL_USERS);) {
+	  PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
 	  // Step 5.2: Execute the query or update query
 	  ResultSet rs = preparedStatement.executeQuery();
 	  // Step 5.3: Process the ResultSet object.
@@ -76,7 +84,82 @@ public class ProfileServlet extends HttpServlet {
 	  }
 	 // Step 5.4: Set the users list into the listUsers attribute to be pass to the userManagement.jsp
 	 request.setAttribute("listUsers", users);
-	 request.getRequestDispatcher("/userManagement.jsp").forward(request, response);
+	 request.getRequestDispatcher("/Profile.jsp").forward(request, response);
+	 }
+	 
+	//method to get parameter, query database for existing user data and redirect to user edit page
+	 private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+	 throws SQLException, ServletException, IOException {
+	 //get parameter passed in the URL
+	 String username = request.getParameter("username");
+	 UserClass existingUser = new UserClass(0, "", "", "", "", "");
+	 // Step 1: Establishing a Connection
+	 try (Connection connection = getConnection();
+	 // Step 2:Create a statement using connection object
+	 PreparedStatement preparedStatement =
+	 connection.prepareStatement(SELECT_USER_BY_ID_UPDATE);) {
+	 preparedStatement.setString(1, username);
+	 // Step 3: Execute the query or update query
+	 ResultSet rs = preparedStatement.executeQuery();
+	 // Step 4: Process the ResultSet object
+	 while (rs.next()) {
+	int userID = rs.getInt("userID");
+	 username = rs.getString("username");
+	 String password = rs.getString("password");
+	 String email = rs.getString("email");
+	 String firstname = rs.getString("firstname");
+	 String lastname = rs.getString("lastname");
+	 existingUser = new UserClass(userID, username, password, email, firstname, lastname);
+	 }
+	 } catch (SQLException e) {
+	 System.out.println(e.getMessage());
+	 }
+	 //Step 5: Set existingUser to request and serve up the userEdit form
+	 request.setAttribute("user", existingUser);
+	 request.getRequestDispatcher("/userEdit.jsp").forward(request, response);
+	 }
+	 
+	//method to update the user table base on the form data
+	 private void updateUser(HttpServletRequest request, HttpServletResponse response)
+	 throws SQLException, IOException {
+	 //Step 1: Retrieve value from the request
+		 int userID = Integer.parseInt(request.getParameter("userID"));
+	  String oriName = request.getParameter("oriName");
+	  String username = request.getParameter("username");
+	  String password = request.getParameter("password");
+	  String email = request.getParameter("email");
+	  String firstname = request.getParameter("firstname");
+	  String lastname = request.getParameter("lastname");
+
+	  //Step 2: Attempt connection with database and execute update user SQL query
+	  try (Connection connection = getConnection(); PreparedStatement statement =
+	 connection.prepareStatement(UPDATE_USERS_SQL);) {
+	statement.setInt(1, userID);
+	  statement.setString(2, username);
+	  statement.setString(3, password);
+	  statement.setString(4, email);
+	  statement.setString(5, firstname);
+	  statement.setString(6, lastname);
+	  statement.setString(7, oriName);
+	  int i = statement.executeUpdate();
+	  }
+	  //Step 3: redirect back to UserServlet (note: remember to change the url to your project name)
+	  response.sendRedirect("http://localhost:8080/FinancialDiary/ProfileServlet/dashboard");
+	 }
+	 
+	//method to delete user
+	 private void deleteUser(HttpServletRequest request, HttpServletResponse response)
+	 throws SQLException, IOException {
+	 //Step 1: Retrieve value from the request
+	  String username = request.getParameter("username");
+	  //Step 2: Attempt connection with database and execute delete user SQL query
+	  try (Connection connection = getConnection(); PreparedStatement statement =
+	 connection.prepareStatement(DELETE_USERS_SQL);) {
+	  statement.setString(1, username);
+	  int i = statement.executeUpdate();
+	  }
+	  //Step 3: redirect back to UserServlet dashboard (note: remember to change the url to your project name)
+	  response.sendRedirect("http://localhost:8080/FinancialDiary/ProfileServlet/dashboard");
 	 }
        
     /**
@@ -98,21 +181,22 @@ public class ProfileServlet extends HttpServlet {
 		String action = request.getServletPath();
 		 try {
 		 switch (action) {
-		 case "/insert":
+		 case "/ProfileServlet/delete":
+		 deleteUser(request, response);
 		 break;
-		 case "/delete":
+		 case "/ProfileServlet/edit":
+		 showEditForm(request, response);
 		 break;
-		 case "/edit":
+		 case "/ProfileServlet/update":
+		 updateUser(request, response);
 		 break;
-		 case "/update":
-		 break;
-		 default:
+		 case "/ProfileServlet/dashboard":
 		 listUsers(request, response);
 		 break;
 		 }
 		 } catch (SQLException ex) {
 		 throw new ServletException(ex);
-		 }
+		 } 
 	}
 
 	/**
