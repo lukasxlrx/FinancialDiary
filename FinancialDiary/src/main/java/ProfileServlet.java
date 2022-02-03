@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -206,5 +204,4 @@ public class ProfileServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
