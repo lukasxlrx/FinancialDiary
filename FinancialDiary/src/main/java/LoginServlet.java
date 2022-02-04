@@ -85,8 +85,12 @@ public class LoginServlet extends HttpServlet {
 			switch (action) {
 			
 			case "/LoginServlet/login":
+				System.out.println("hi login");
+				loginUsers(request, response);
 				break;
 			case "LoginServlet/logout":
+				System.out.println("hi logout");
+//				LogOutUser(request, response);
 				break;
 			case "/delete":
 				break;
@@ -163,7 +167,7 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("4.3. Get isLoggedIn from session storage");
 					
 					
-					response.sendRedirect("http://localhost:8090/FinancialDiary/Transaction.jsp");
+					response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
 					System.out.println("5. Successful Redirect");
 					//response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
 				}
@@ -178,15 +182,15 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 	
-	// For Logging Out
-	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		HttpSession session = request.getSession();
-		session.removeAttribute("username");
-		session.invalidate();
-		System.out.println("You are logged out");
-		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
-
-	}
+//	// For Logging Out
+//	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
+//			throws SQLException, IOException, ServletException {
+//		HttpSession session = request.getSession();
+//		session.removeAttribute("username");
+//		session.invalidate();
+//		System.out.println("You are logged out");
+//		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
+//
+//	}
 
 }
