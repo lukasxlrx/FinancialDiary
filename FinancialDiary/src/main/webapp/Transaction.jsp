@@ -28,19 +28,25 @@
 			</a></li>
 
 			<li class="nav-item"><a class="nav-link" href="http://localhost:8090/FinancialDiary/ProfileServlet/dashboard">Profile</a></li>
-			<!-- insert inside navbar and link to loginServlet-->
-			<li class="nav-item text-center">
-			 <a class="nav-link" href="logout">Log out</a>
-			</li>
+		
+
+			<li class="nav-item text-center"><a class="nav-link"
+				href="/LoginServlet/logout">Log out</a></li>
+
 		</ul>
 	</div>
-
 </nav>
+
 <body>
 	<div class="row">
 		<div class="container">
-			<br> <a href="<%=request.getContextPath()%>/CreateTransaction.jsp" class="btn btn-primary">Add New item</a> <br>
+
+			<br> <a
+				href="<%=request.getContextPath()%>/CreateTransaction.jsp"
+				class="btn btn-primary">Add New Transaction</a> <br>
+
 			<hr>
+
 			<!-- Create a table to list out all current users information -->
 			<table class="table table-striped table-bordered">
 				<thead class="thead-dark">
@@ -52,23 +58,18 @@
 
 					</tr>
 				</thead>
-				<!-- Pass in the list of users receive via the Servletâs response to a loop -->
-
 				<tbody>
-					<c:forEach var="users" items="${listUsers}">
+					<c:forEach var="transactions" items="${listTransactions}">
 						<!-- For each user in the database, display their information accordingly -->
 						<tr>
-							<td><c:out value="${users.name}" /></td>
-							<td><c:out value="${users.price}" /></td>
-							<td><c:out value="${users.payment}" /></td>
+							<td><c:out value="${transactions.name}" /></td>
+							<td>$<c:out value="${transactions.price}" /></td>
+							<td><c:out value="${transactions.payment}" /></td>
 							<!-- For each user in the database, Edit/Delete buttons which invokes the edit/delete functions -->
 							<td>
 								<div>
-									<%-- 	<button class="btn btn-success" href="TransactionServlet/edit?transactionID=<c:out value='${users.transactionID}'/>"> Edit</button> --%>
-									<a
-										href="edit?transactionID=<c:out value='${users.transactionID}'/>">Edit</a>
-									<a
-										href="delete?transactionID=<c:out value='${users.transactionID}'/>">Delete</a>
+									<a href="edit?transactionID=<c:out value='${transactions.transactionID}'/>">Edit</a>
+									<a href="delete?transactionID=<c:out value='${transactions.transactionID}'/>">Delete</a>
 								</div>
 							</td>
 						</tr>

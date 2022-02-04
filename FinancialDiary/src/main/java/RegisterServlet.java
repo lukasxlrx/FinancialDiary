@@ -85,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
 			// successfully registered” via the response,
 			if (i > 0) {
 				PrintWriter writer = response.getWriter();
-				writer.println("<h1>" + "You have successfully registered an account!" + "</h1>");
+				response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
 				writer.close();
 			}
 		}

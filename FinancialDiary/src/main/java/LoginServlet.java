@@ -88,10 +88,10 @@ public class LoginServlet extends HttpServlet {
 				System.out.println("hi login");
 				loginUsers(request, response);
 				break;
-
 			case "LoginServlet/logout":
 				System.out.println("hi logout");
 //				LogOutUser(request, response);
+
 
 				break;
 			case "/delete":
@@ -183,16 +183,6 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-//	// For Logging Out
-//	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
-//			throws SQLException, IOException, ServletException {
-//		HttpSession session = request.getSession();
-//		session.removeAttribute("username");
-//		session.invalidate();
-//		System.out.println("You are logged out");
-//		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
-//
-//	}
+
 
 }

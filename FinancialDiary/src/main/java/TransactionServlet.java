@@ -1,8 +1,14 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,12 +38,12 @@ public class TransactionServlet extends HttpServlet {
 	// Step 2: Prepare list of SQL prepared statements to perform CRUD to our
 	// database
 
-	private static final String INSERT_TRANSACTION_SQL = "INSERT INTO transaction"
-			+ " (transactionid, name, price, payment) VALUES " + " (?, ?, ?);";
-	private static final String SELECT_TRANSACTION_BY_ID = "select transactionid ,name, price, payment, userid from transaction where transactionid = ?";
+	private static final String INSERT_TRANSACTION_SQL = "INSERT INTO transaction" + " (transactionid, name, price, payment) VALUES " + " (?, ?, ?);";
+	private static final String SELECT_TRANSACTION_BY_ID = "select transactionid ,name, price, payment, user_id from transaction where transactionid = ?";
 	private static final String SELECT_ALL_TRANSACTION = "select * from transaction ";
 	private static final String DELETE_TRANSACTION_SQL = "delete from transaction where transactionid = ?;";
-	private static final String UPDATE_TRANSACTION_SQL = "update transaction set transactionid=?, name = ?, price = ?,payment = ?, userid = ? where transactionid = ?;";
+	private static final String UPDATE_TRANSACTION_SQL = "update transaction set transactionid=?, name = ?, price = ?,payment = ?, user_id = ? where transactionid = ?;";
+
 
 	// Step 3: Implement the getConnection method which facilitates connection to
 	// the database via JDBC
@@ -62,6 +68,7 @@ public class TransactionServlet extends HttpServlet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -100,7 +107,7 @@ public class TransactionServlet extends HttpServlet {
 			default:
 				System.out.println("has getting");
 			case "/TransactionServlet/dashboard":
-				listUsers(request, response);
+				listTransactions(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -108,6 +115,9 @@ public class TransactionServlet extends HttpServlet {
 		}
 	}
 
+	
+	
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -122,31 +132,36 @@ public class TransactionServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
 		// Step 2: retrieve the four parameters from the request from the web form
-		String n = request.getParameter("name");
-		int p = Integer.parseInt((request.getParameter("price")));
-		String e = request.getParameter("payment");
+		
+		String name = request.getParameter("name");
+		int price = Integer.parseInt((request.getParameter("price")));
+		String payment = request.getParameter("payment");
+
 
 		// Step 3: attempt connection to database using JDBC, you can change the
 		// username and password accordingly using the phpMyAdmin > User Account
 		// dashboard
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root", "password");
 
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root",
-					"password");
+
+
+
 
 			// Step 4: implement the sql query using prepared statement
 			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
-			PreparedStatement ps = con.prepareStatement("insert into transaction values(?,?,?,?,?)");
+			PreparedStatement ps = con.prepareStatement("insert into TRANSACTION values(?,?,?,?,?)");
+
 
 			System.out.println("my session storage is " + session.getAttribute("userID"));
 
 			// Step 5: parse in the data retrieved from the web form request into the
 			// prepared statement accordingly
 			ps.setInt(1, 0);
-			ps.setString(2, n);
-			ps.setInt(3, p);
-			ps.setString(4, e);
+			ps.setString(2, name);
+			ps.setInt(3, price);
+			ps.setString(4, payment);
 			ps.setInt(5, uid);
 
 			// Step 6: perform the query on the database using the prepared statement
@@ -154,6 +169,7 @@ public class TransactionServlet extends HttpServlet {
 
 			// Step 7: check if the query had been successfully execute, return “You are
 			// successfully registered” via the response,
+
 			if (i > 0) {
 				PrintWriter writer = response.getWriter();
 				// writer.println("<h1>" + "You have successfully registered an account!" +
@@ -173,11 +189,11 @@ public class TransactionServlet extends HttpServlet {
 
 	// Step 5: listUsers function to connect to the database and retrieve all users
 	// records
-	private void listUsers(HttpServletRequest request, HttpServletResponse response)
+	private void listTransactions(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
-		List<TransactionClass> users = new ArrayList<>();
+		List<TransactionClass> transactions = new ArrayList<>();
 		try (Connection connection = getConnection();
 
 				// Step 5.1: Create a statement using connection object
@@ -195,8 +211,10 @@ public class TransactionServlet extends HttpServlet {
 					String name = rs.getString("name");
 					int price = rs.getInt("price");
 					String payment = rs.getString("payment");
-					// System.out.println(TransactionID);
-					users.add(new TransactionClass(TransactionID, name, price, payment, UserID));
+
+					//System.out.println(TransactionID);
+					transactions.add(new TransactionClass(TransactionID, name, price, payment, UserID));
+
 				}
 			}
 		} catch (SQLException e) {
@@ -205,8 +223,8 @@ public class TransactionServlet extends HttpServlet {
 
 		// Step 5.4: Set the users list into the listUsers attribute to be pass to the
 		// userManagement.jsp
-		request.setAttribute("listUsers", users);
-		System.out.println(users);
+		request.setAttribute("listTransactions", transactions);
+		System.out.println(transactions);
 		request.getRequestDispatcher("/Transaction.jsp").forward(request, response);
 	}
 
@@ -303,6 +321,7 @@ public class TransactionServlet extends HttpServlet {
 		// url to your project name)
 		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
 	}
+
 
 	// For Logging Out
 	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
