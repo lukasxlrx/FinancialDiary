@@ -88,9 +88,11 @@ public class LoginServlet extends HttpServlet {
 				System.out.println("hi login");
 				loginUsers(request, response);
 				break;
+
 			case "LoginServlet/logout":
 				System.out.println("hi logout");
 //				LogOutUser(request, response);
+
 				break;
 			case "/delete":
 				break;
