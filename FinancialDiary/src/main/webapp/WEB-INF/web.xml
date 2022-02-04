@@ -13,7 +13,6 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
-
 	<servlet>
 		<servlet-name>TransactionServlet</servlet-name>
 		<servlet-class>TransactionServlet</servlet-class>
@@ -41,7 +40,6 @@
 		<url-pattern>/ProfileServlet/delete</url-pattern>
 	</servlet-mapping>
 	
-	
 		<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>LoginServlet</servlet-class>
@@ -53,3 +51,4 @@
 		<url-pattern>/LoginServlet/logout</url-pattern>
 	</servlet-mapping>
 </web-app>
+
