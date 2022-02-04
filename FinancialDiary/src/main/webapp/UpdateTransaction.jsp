@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,28 +11,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-<body style="text-align: center;">
-<form action="TransactionServlet" method = "post" style="display: inline-block; size: 50px;">
-
-   
-
-<div class="form-group">
-    <label for="Name">Name of the item</label>
-    <input name="name" type="text" class="form-control" id="exampleInputname" aria-describedby="nameHelp" placeholder="Enter name of the item" size="60">
-  </div>
-   <div class="form-group">
-    <label for="Price">Price</label>
-    <input name = "price" type="number" class="form-control" id="exampleInputPrice" aria-describedby="PriceHelp" placeholder="Enter the price">
-  </div>
-     <div class="form-group">
-    <label for="PaymentMethod">Payment Method</label>
-    <input name = "payment" type="text" class="form-control" id="exampleInputPaymentMethod" aria-describedby="PaymentHelp" placeholder="Enter the Payment Method">
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Update to list</button>
-  
-    
-  </form>
-</body>
+	<nav class="navbar navbar-expand-md navbar-light">
+		<div>
+			<a class="navbar-brand"> User Management Application </a>
+		</div>
+		<ul class="navbar-nav">
+			<li><a href="<%=request.getContextPath()%>/TransactionServlet/dashboard" class="nav-link">Back to Dashboard</a></li>
+		</ul>
+	</nav>
+	<div class="container col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<c:if test="${transaction != null}">
+					<form action="update" method="put">
+				</c:if>
+				<input type="hidden" name="TransactionID" value='${transaction.transactionID}' />
+				<input type="hidden" name="UserID"  value='${transaction.userID}' /> 
+				<fieldset class="form-group">
+					<label>Name</label> 
+					<input type="text"  value='${transaction.name}'  class="form-control" name="name" required="required">
+				</fieldset>
+				<fieldset class="form-group">
+					<label>price</label> 
+					<input type="number" value='${transaction.price}' class="form-control" name="price">
+				</fieldset>
+				<fieldset class="form-group">
+					<label>Payment</label> 
+					<input type="text" value='${transaction.payment}' class="form-control" name="payment">
+				</fieldset>
+				<button type="submit" class="btn btn-success">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
