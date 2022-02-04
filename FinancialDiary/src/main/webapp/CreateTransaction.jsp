@@ -11,21 +11,21 @@
 <title>Insert title here</title>
 </head>
 <body style="text-align: center;">
-<form style="display: inline-block; size: 50px;">
+<form action="TransactionServlet" method = "post" style="display: inline-block; size: 50px;">
 
    
 
 <div class="form-group">
     <label for="Name">Name of the item</label>
-    <input type="text" class="form-control" id="exampleInputname" aria-describedby="nameHelp" placeholder="Enter name of the item" size="60">
+    <input name="name" type="text" class="form-control" id="exampleInputname" aria-describedby="nameHelp" placeholder="Enter name of the item" size="60">
   </div>
    <div class="form-group">
     <label for="Price">Price</label>
-    <input type="number" class="form-control" id="exampleInputPrice" aria-describedby="PriceHelp" placeholder="Enter the price">
+    <input name = "price" type="number" class="form-control" id="exampleInputPrice" aria-describedby="PriceHelp" placeholder="Enter the price">
   </div>
      <div class="form-group">
     <label for="PaymentMethod">Payment Method</label>
-    <input type="text" class="form-control" id="exampleInputPaymentMethod" aria-describedby="PaymentHelp" placeholder="Enter the Payment Method">
+    <input name = "payment" type="text" class="form-control" id="exampleInputPaymentMethod" aria-describedby="PaymentHelp" placeholder="Enter the Payment Method">
   </div>
   
   <button type="submit" class="btn btn-primary">Add to list</button>

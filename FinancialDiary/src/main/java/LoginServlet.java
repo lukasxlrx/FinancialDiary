@@ -86,7 +86,8 @@ public class LoginServlet extends HttpServlet {
 			
 			case "/LoginServlet/login":
 				break;
-			case "LoginServlet/logout":
+			case "/LoginServlet/logout":
+				LogOutUser(request, response);
 				break;
 			case "/delete":
 				break;

@@ -25,7 +25,11 @@
 					<span class="sr-only">(current)</span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link"
-				href="<%=request.getContextPath()%>/Transaction.jsp">My Transaction</a></li>
+				href="<%=request.getContextPath()%>/Transaction.jsp">My
+					Transaction</a></li>
+					
+					
+			<li class="nav-item text-center"><a class="nav-link" href="/LoginServlet/logout">Log out</a></li>
 		</ul>
 	</div>
 </nav>

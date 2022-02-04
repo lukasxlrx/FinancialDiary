@@ -58,11 +58,11 @@ public class TransactionServlet extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/transaction", "root", "Password");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root", "password");
 
 			// Step 4: implement the sql query using prepared statement
 			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
-			PreparedStatement ps = con.prepareStatement("insert into transactiondb values(?,?,?,?)");
+			PreparedStatement ps = con.prepareStatement("insert into TRANSACTION values(?,?,?,?)");
 
 			// Step 5: parse in the data retrieved from the web form request into the
 			// prepared statement accordingly
