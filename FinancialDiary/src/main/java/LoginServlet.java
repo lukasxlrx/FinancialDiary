@@ -87,6 +87,7 @@ public class LoginServlet extends HttpServlet {
 			case "/LoginServlet/login":
 				break;
 			case "/LoginServlet/logout":
+				LogOutUser(request,response);
 				break;
 			case "/delete":
 				break;
@@ -185,7 +186,7 @@ public class LoginServlet extends HttpServlet {
 		session.removeAttribute("username");
 		session.invalidate();
 		System.out.println("You are logged out");
-		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
+		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
 
 	}
 
