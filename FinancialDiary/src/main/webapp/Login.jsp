@@ -22,7 +22,7 @@
           <h5 style="text-align: center;">Welcome to Your Financial Diary</h5>
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form action="LoginServlet" method="post">
+        <form action="LoginServlet/login" method="post">
           <!-- Username input -->
           <div class="form-outline mb-4">
             <input type="text" name="username" class="form-control form-control-lg"

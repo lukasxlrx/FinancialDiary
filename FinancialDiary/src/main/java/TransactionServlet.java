@@ -44,6 +44,7 @@ public class TransactionServlet extends HttpServlet {
 	private static final String DELETE_TRANSACTION_SQL = "delete from transaction where transactionid = ?;";
 	private static final String UPDATE_TRANSACTION_SQL = "update transaction set transactionid=?, name = ?, price = ?,payment = ?, user_id = ? where transactionid = ?;";
 
+
 	// Step 3: Implement the getConnection method which facilitates connection to
 	// the database via JDBC
 	protected Connection getConnection() {
@@ -87,7 +88,7 @@ public class TransactionServlet extends HttpServlet {
 				break;
 			case "/TransactionServlet/delete":
 				System.out.println("hi delete");
-				deleteTransaction(request, response); 
+				deleteTransaction(request, response);
 				break;
 			case "/TransactionServlet/edit":
 				System.out.println("hi edit");
@@ -97,7 +98,11 @@ public class TransactionServlet extends HttpServlet {
 			case "/TransactionServlet/update":
 				System.out.println("hi update");
 				System.out.println("Hi Update" + Integer.parseInt(request.getParameter("TransactionID")));
-				updateTransaction(request, response); 
+				updateTransaction(request, response);
+				break;
+			case "/TransactionServlet/logout":
+				System.out.println("hi logout");
+				LogOutUser(request, response);
 				break;
 			default:
 				System.out.println("has getting");
@@ -141,9 +146,13 @@ public class TransactionServlet extends HttpServlet {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root", "password");
 
 
+
+
+
 			// Step 4: implement the sql query using prepared statement
 			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
 			PreparedStatement ps = con.prepareStatement("insert into TRANSACTION values(?,?,?,?,?)");
+
 
 			System.out.println("my session storage is " + session.getAttribute("userID"));
 
@@ -158,8 +167,8 @@ public class TransactionServlet extends HttpServlet {
 			// Step 6: perform the query on the database using the prepared statement
 			int i = ps.executeUpdate();
 
-			// Step 7: check if the query had been successfully execute, return “You are
-			// successfully registered” via the response,
+			// Step 7: check if the query had been successfully execute, return â€œYou are
+			// successfully registeredâ€ via the response,
 
 			if (i > 0) {
 				PrintWriter writer = response.getWriter();
@@ -189,21 +198,23 @@ public class TransactionServlet extends HttpServlet {
 
 				// Step 5.1: Create a statement using connection object
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TRANSACTION);) {
-			//System.out.println(uid);
-			//System.out.println("userID");
+			// System.out.println(uid);
+			// System.out.println("userID");
 			// Step 5.2: Execute the query or update query
 			ResultSet rs = preparedStatement.executeQuery();
 
 			// Step 5.3: Process the ResultSet object.
 			while (rs.next()) {
-				int UserID = rs.getInt("user_id");
+				int UserID = rs.getInt("userid");
 				if (UserID == uid) {
 					int TransactionID = rs.getInt("transactionID");
 					String name = rs.getString("name");
 					int price = rs.getInt("price");
 					String payment = rs.getString("payment");
+
 					//System.out.println(TransactionID);
 					transactions.add(new TransactionClass(TransactionID, name, price, payment, UserID));
+
 				}
 			}
 		} catch (SQLException e) {
@@ -223,31 +234,31 @@ public class TransactionServlet extends HttpServlet {
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		int TransactionID = Integer.parseInt((request.getParameter("transactionID")));
-		//int price = Integer.parseInt((request.getParameter("price")));
+		// int price = Integer.parseInt((request.getParameter("price")));
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
 
-		TransactionClass existingTransaction = new TransactionClass(TransactionID, "", 0 , "", uid);
+		TransactionClass existingTransaction = new TransactionClass(TransactionID, "", 0, "", uid);
 		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
-		// Step 2:Create a statement using connection object
-		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TRANSACTION_BY_ID);) {
-		preparedStatement.setInt(1, TransactionID);
-		// Step 3: Execute the query or update query
-		ResultSet rs = preparedStatement.executeQuery();
-		// Step 4: Process the ResultSet object
-		while (rs.next()) {
+				// Step 2:Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TRANSACTION_BY_ID);) {
+			preparedStatement.setInt(1, TransactionID);
+			// Step 3: Execute the query or update query
+			ResultSet rs = preparedStatement.executeQuery();
+			// Step 4: Process the ResultSet object
+			while (rs.next()) {
 				TransactionID = rs.getInt("transactionID");
 				String name = rs.getString("name");
 				int price = rs.getInt("price");
 				String payment = rs.getString("payment");
-				int UserID = rs.getInt("user_id");
+				int UserID = rs.getInt("userid");
 				System.out.println(rs.getInt("transactionID"));
 				System.out.println(rs.getString("name"));
 				System.out.println(rs.getInt("price"));
 				System.out.println(rs.getString("payment"));
-				System.out.println("user id"+UserID);
-				System.out.println(rs.getInt("user_id"));
+				System.out.println("user id" + UserID);
+				System.out.println(rs.getInt("userid"));
 				System.out.println(uid);
 				System.out.println(session.getAttribute("userID"));
 				existingTransaction = new TransactionClass(TransactionID, name, price, payment, UserID);
@@ -263,7 +274,8 @@ public class TransactionServlet extends HttpServlet {
 
 	// Update
 	// method to update the user table base on the form data
-	private void updateTransaction(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+	private void updateTransaction(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
 
 		// Step 1: Retrieve value from the request
 		int TransactionID = Integer.parseInt((request.getParameter("TransactionID")));
@@ -279,7 +291,7 @@ public class TransactionServlet extends HttpServlet {
 			statement.setInt(1, TransactionID);
 			statement.setString(2, name);
 			statement.setInt(3, price);
-			statement.setString(4, payment); 	
+			statement.setString(4, payment);
 			statement.setInt(5, UserID);
 			statement.setInt(6, TransactionID);
 			int i = statement.executeUpdate();
@@ -293,10 +305,10 @@ public class TransactionServlet extends HttpServlet {
 
 	// Delete
 	// method to delete user
-	private void deleteTransaction(HttpServletRequest request, HttpServletResponse response) 
+	private void deleteTransaction(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		// Step 1: Retrieve value from the request
-		//System.out.println(Integer.parseInt(request.getParameter("transactionID")));
+		// System.out.println(Integer.parseInt(request.getParameter("transactionID")));
 		int TransactionID = Integer.parseInt(request.getParameter("transactionID"));
 		System.out.println(TransactionID);
 		// Step 2: Attempt connection with database and execute delete user SQL query
@@ -310,18 +322,17 @@ public class TransactionServlet extends HttpServlet {
 		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	// For Logging Out
+	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		HttpSession session = request.getSession();
+		session.removeAttribute("userID");
+		session.removeAttribute("username");
+		session.invalidate();
+		System.out.println("You are logged out");
+		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+
+	}
 
 }

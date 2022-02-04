@@ -24,14 +24,15 @@
 		<ul class="navbar-nav mr-auto">
 			<li style="margin-left: 175px;" class="nav-item active"><a
 				class="nav-link"
-				href="<%=request.getContextPath()%>/TransactionServlet/dashboard">
-					Transactions<span class="sr-only">(current)</span>
+				href="<%=request.getContextPath()%>/TransactionServlet/dashboard"> Transactions<span class="sr-only">(current)</span>
 			</a></li>
 
-			<li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+			<li class="nav-item"><a class="nav-link" href="http://localhost:8090/FinancialDiary/ProfileServlet/dashboard">Profile</a></li>
+		
 
 			<li class="nav-item text-center"><a class="nav-link"
 				href="/LoginServlet/logout">Log out</a></li>
+
 		</ul>
 	</div>
 </nav>
@@ -39,9 +40,11 @@
 <body>
 	<div class="row">
 		<div class="container">
+
 			<br> <a
 				href="<%=request.getContextPath()%>/CreateTransaction.jsp"
 				class="btn btn-primary">Add New Transaction</a> <br>
+
 			<hr>
 
 			<!-- Create a table to list out all current users information -->
