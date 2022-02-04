@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 
 	private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
 	private String jdbcUsername = "root";
-	private String jdbcPassword = "Password";
+	private String jdbcPassword = "password";
 
 	//using email, password
 //	private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails"
@@ -85,8 +85,12 @@ public class LoginServlet extends HttpServlet {
 			switch (action) {
 			
 			case "/LoginServlet/login":
+				System.out.println("hi login");
+				loginUsers(request, response);
 				break;
 			case "LoginServlet/logout":
+				System.out.println("hi logout");
+//				LogOutUser(request, response);
 				break;
 			case "/delete":
 				break;
@@ -178,15 +182,15 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 	
-	// For Logging Out
-	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		HttpSession session = request.getSession();
-		session.removeAttribute("username");
-		session.invalidate();
-		System.out.println("You are logged out");
-		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
-
-	}
+//	// For Logging Out
+//	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
+//			throws SQLException, IOException, ServletException {
+//		HttpSession session = request.getSession();
+//		session.removeAttribute("username");
+//		session.invalidate();
+//		System.out.println("You are logged out");
+//		response.sendRedirect("http://localhost:8090/FinancialDiary/login.jsp");
+//
+//	}
 
 }
