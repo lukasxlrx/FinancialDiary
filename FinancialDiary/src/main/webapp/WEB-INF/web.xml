@@ -25,5 +25,31 @@
 		<url-pattern>/TransactionServlet/edit</url-pattern>
 		<url-pattern>/TransactionServlet/update</url-pattern>
 		<url-pattern>/TransactionServlet/delete</url-pattern>
+		<url-pattern>/TransactionServlet/logout</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>ProfileServlet</servlet-name>
+		<servlet-class>ProfileServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProfileServlet</servlet-name>
+		<url-pattern>/ProfileServlet/dashboard</url-pattern>
+		<url-pattern>/ProfileServlet/edit</url-pattern>
+		<url-pattern>/ProfileServlet/update</url-pattern>
+		<url-pattern>/ProfileServlet/delete</url-pattern>
+	</servlet-mapping>
+	
+	
+		<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>LoginServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/LoginServlet/login</url-pattern>
+		<url-pattern>/LoginServlet/logout</url-pattern>
 	</servlet-mapping>
 </web-app>
