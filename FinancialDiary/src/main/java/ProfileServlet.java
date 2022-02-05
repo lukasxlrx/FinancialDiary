@@ -33,7 +33,7 @@ public class ProfileServlet extends HttpServlet {
 	private static final String SELECT_USER_BY_ID_UPDATE = "select userID,username,password,email,firstname,lastname from user where username =?";
 	private static final String SELECT_ALL_USERS = "select * from user ";
 	private static final String SELECT_USER_BY_ID = "select * from user where userID = ?";
-	private static final String DELETE_USERS_SQL = "delete from user where username = ?;";
+	private static final String DELETE_USERS_SQL = "delete from user where username = ?";
 	private static final String UPDATE_USERS_SQL = "update user set userID = ?,username = ?,password= ?, email =?,firstname =?, lastname=? where username = ?;";
 
 	// Step 3: Implement the getConnection method which facilitates connection to
@@ -143,7 +143,7 @@ public class ProfileServlet extends HttpServlet {
 		}
 		// Step 3: redirect back to UserServlet (note: remember to change the url to
 		// your project name)
-		response.sendRedirect("http://localhost:8090/FinancialDiary/ProfileServlet/dashboard");
+		response.sendRedirect("http://localhost:8080/FinancialDiary/ProfileServlet/dashboard");
 	}
 
 	// method to delete user
@@ -162,7 +162,7 @@ public class ProfileServlet extends HttpServlet {
 		session.invalidate();
 		// Step 3: redirect back to UserServlet dashboard (note: remember to change the
 		// url to your project name)
-		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+		response.sendRedirect("http://localhost:8080/FinancialDiary/Login.jsp");
 	}
 
 	/**
