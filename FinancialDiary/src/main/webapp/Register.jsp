@@ -37,7 +37,7 @@ body {
 			<div class="card-body">
 				
 				<p style="text-align: left;">
-					<a href="http://localhost:8080/FinancialDiary/Login.jsp">Back to Login</a>
+					<a href="http://localhost:8090/FinancialDiary/Login.jsp">Back to Login</a>
 				</p>
 
 				<form action="RegisterServlet" method="post">

@@ -27,7 +27,7 @@
 				href="<%=request.getContextPath()%>/TransactionServlet/dashboard"> Transactions<span class="sr-only">(current)</span>
 			</a></li>
 
-			<li class="nav-item"><a class="nav-link" href="http://localhost:8080/FinancialDiary/ProfileServlet/dashboard">Profile</a></li>
+			<li class="nav-item"><a class="nav-link" href="http://localhost:8090/FinancialDiary/ProfileServlet/dashboard">Profile</a></li>
 			<!-- insert inside navbar and link to loginServlet-->
 			<li class="nav-item text-center">
 			 <a class="nav-link" href="logout">Log out</a>

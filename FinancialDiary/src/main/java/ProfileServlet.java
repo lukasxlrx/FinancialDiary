@@ -143,7 +143,7 @@ public class ProfileServlet extends HttpServlet {
 		}
 		// Step 3: redirect back to UserServlet (note: remember to change the url to
 		// your project name)
-		response.sendRedirect("http://localhost:8080/FinancialDiary/ProfileServlet/dashboard");
+		response.sendRedirect("http://localhost:8090/FinancialDiary/ProfileServlet/dashboard");
 	}
 
 	// method to delete user
@@ -162,7 +162,7 @@ public class ProfileServlet extends HttpServlet {
 		session.invalidate();
 		// Step 3: redirect back to UserServlet dashboard (note: remember to change the
 		// url to your project name)
-		response.sendRedirect("http://localhost:8080/FinancialDiary/Login.jsp");
+		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
 	}
 
 	/**
