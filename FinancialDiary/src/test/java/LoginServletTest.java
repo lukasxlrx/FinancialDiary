@@ -43,8 +43,8 @@ class LoginServletTest {
 	@Test
 	void testLoginUserFunction() {
 		//fail("Not yet implemented");
-		var correctCredentials = LoginServlet.loginUserFunction(username, password);
-		var wrongCredentials = LoginServlet.loginUserFunction("lukas", "123456");
+		UserClass correctCredentials = LoginServlet.loginUserFunction(username, password);
+		UserClass wrongCredentials = LoginServlet.loginUserFunction("lukas", "123456");
 		assertTrue(!correctCredentials.equals(wrongCredentials));
 	}
 
