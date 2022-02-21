@@ -103,7 +103,7 @@
 			<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surfire-plugin</artifactId>
-				<version>2.22.1</version>
+				<version>2.22.2</version>
 				<configuration>
 					<suiteXmlFile>testng.xml</suiteXmlFile>
 					<testFailureIgnore>true</testFailureIgnore>
