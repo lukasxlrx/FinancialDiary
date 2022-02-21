@@ -39,6 +39,7 @@
 					<label>Payment</label> 
 					<input type="text" value='${transaction.payment}' class="form-control" name="payment">
 				</fieldset>
+				
 				<button type="submit" class="btn btn-success" name="save">Save</button>
 				</form>
 			</div>

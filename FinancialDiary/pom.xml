@@ -8,7 +8,8 @@
 	<packaging>war</packaging>
 	<name>financialdiary</name>
 	<description>Financial Diary Project</description>
-
+ 
+ 
 	<properties>
 		<selenium.groupId>org.seleniumhq.selenium</selenium.groupId>
 		<selenium.artifactId>selenium-java</selenium.artifactId>
