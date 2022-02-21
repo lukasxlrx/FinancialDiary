@@ -161,13 +161,13 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("4.3. Get isLoggedIn from session storage");
 					
 					
-					response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+					response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
 					System.out.println("5. Successful Redirect");
 					//response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
 				}
 			} else {
 				System.out.println("Wrong username or password");
-				response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+				response.sendRedirect("/FinancialDiary/Login.jsp");
 			}
 		}
 		
