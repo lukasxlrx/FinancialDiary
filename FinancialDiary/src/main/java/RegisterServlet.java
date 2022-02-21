@@ -97,12 +97,12 @@ public class RegisterServlet extends HttpServlet {
 		int i = register(username, password, email, firstname, lastname);
 		
 		if (i > 0) {
-			response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+			response.sendRedirect("/FinancialDiary/Login.jsp");
 		}
 		else {
 			//alert("Unsuccessful Registration. Please try again.");
 			showMessageDialog(null, "Unsuccessful Registration.");
-			response.sendRedirect("http://localhost:8090/FinancialDiary/Register.jsp");
+			response.sendRedirect("/FinancialDiary/Register.jsp");
 		}
 		
 		doGet(request, response);
