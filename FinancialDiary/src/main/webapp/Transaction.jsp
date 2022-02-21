@@ -27,10 +27,10 @@
 				href="<%=request.getContextPath()%>/TransactionServlet/dashboard"> Transactions<span class="sr-only">(current)</span>
 			</a></li>
 
-			<li class="nav-item"><a class="nav-link" href="http://localhost:8090/FinancialDiary/ProfileServlet/dashboard">Profile</a></li>
+			<li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/ProfileServlet/dashboard">Profile</a></li>
 		
 			<li class="nav-item text-center"><a class="nav-link"
-				href="http://localhost:8090/FinancialDiary/LoginServlet/logout">Log out</a></li>
+				href="<%=request.getContextPath()%>/LoginServlet/logout">Log out</a></li>
 
 		</ul>
 	</div>

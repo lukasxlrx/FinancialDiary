@@ -174,7 +174,7 @@ public class TransactionServlet extends HttpServlet {
 				PrintWriter writer = response.getWriter();
 				// writer.println("<h1>" + "You have successfully registered an account!" +
 				// "</h1>");
-				response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+				response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
 				writer.close();
 			}
 		}
@@ -300,7 +300,7 @@ public class TransactionServlet extends HttpServlet {
 		}
 		// Step 3: redirect back to UserServlet (note: remember to change the url to
 		// your project name)
-		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+		response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
 	}
 
 	// Delete
@@ -319,7 +319,7 @@ public class TransactionServlet extends HttpServlet {
 		}
 		// Step 3: redirect back to UserServlet dashboard (note: remember to change the
 		// url to your project name)
-		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+		response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
 	}
 
 
@@ -330,7 +330,7 @@ public class TransactionServlet extends HttpServlet {
 		session.removeAttribute("userID");
 		session.invalidate();
 		System.out.println("You are logged out");
-		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+		response.sendRedirect("/FinancialDiary/Login.jsp");
 
 	}
 
