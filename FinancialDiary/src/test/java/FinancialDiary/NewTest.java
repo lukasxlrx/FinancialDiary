@@ -15,7 +15,6 @@ public class NewTest {
 //	}
 
 	@Test (priority = 1)
-	
 	public void Login() throws InterruptedException {
 		// Load to webpage
 		driver.get("http://localhost:8090/FinancialDiary/Login.jsp");

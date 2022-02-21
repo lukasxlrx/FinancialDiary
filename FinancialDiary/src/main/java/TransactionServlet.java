@@ -21,7 +21,6 @@ import javax.servlet.RequestDispatcher;
  * Servlet implementation class TransactionServlet
  */
 @WebServlet("/TransactionServlet")
-
 public class TransactionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -8,8 +8,7 @@
 	<packaging>war</packaging>
 	<name>financialdiary</name>
 	<description>Financial Diary Project</description>
- 
- 
+
 	<properties>
 		<selenium.groupId>org.seleniumhq.selenium</selenium.groupId>
 		<selenium.artifactId>selenium-java</selenium.artifactId>
@@ -94,8 +93,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<release>15</release>
-				</configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
