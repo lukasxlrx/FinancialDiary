@@ -39,7 +39,7 @@
 <body>
 	<div class="row">
 		<div class="container">
-			<br> <a href="<%=request.getContextPath()%>/CreateTransaction.jsp" class="btn btn-primary">Add New item</a> <br>
+			<br> <a href="<%=request.getContextPath()%>/CreateTransaction.jsp" class="btn btn-primary" name="add">Add</a> <br>
 			<hr>
 			<!-- Create a table to list out all current users information -->
 			<table class="table table-striped table-bordered">
@@ -65,10 +65,9 @@
 							<td>
 								<div>
 									<%-- 	<button class="btn btn-success" href="TransactionServlet/edit?transactionID=<c:out value='${users.transactionID}'/>"> Edit</button> --%>
+									<a href="edit?transactionID=<c:out value='${users.transactionID}'/>" name="editing">Edit</a>
 									<a
-										href="edit?transactionID=<c:out value='${users.transactionID}'/>">Edit</a>
-									<a
-										href="delete?transactionID=<c:out value='${users.transactionID}'/>">Delete</a>
+										href="delete?transactionID=<c:out value='${users.transactionID}'/>" name="deleting">Delete</a>
 								</div>
 							</td>
 						</tr>

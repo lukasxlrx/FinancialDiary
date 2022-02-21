@@ -28,7 +28,7 @@
     <input name = "payment" type="text" class="form-control" id="exampleInputPaymentMethod" aria-describedby="PaymentHelp" placeholder="Enter the Payment Method">
   </div>
   
-  <button type="submit" class="btn btn-primary">Add to list</button>
+  <button type="submit" class="btn btn-primary" name="add">Add to list</button>
   
     
   </form>

@@ -125,86 +125,26 @@ public class TransactionServlet extends HttpServlet {
 		String n = request.getParameter("name");
 		int p = Integer.parseInt((request.getParameter("price")));
 		String e = request.getParameter("payment");
-
-		// Step 3: attempt connection to database using JDBC, you can change the
-		// username and password accordingly using the phpMyAdmin > User Account
-		// dashboard
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root",
-					"password");
-
-			// Step 4: implement the sql query using prepared statement
-			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
-			PreparedStatement ps = con.prepareStatement("insert into transaction values(?,?,?,?,?)");
-
-			System.out.println("my session storage is " + session.getAttribute("userID"));
-
-			// Step 5: parse in the data retrieved from the web form request into the
-			// prepared statement accordingly
-			ps.setInt(1, 0);
-			ps.setString(2, n);
-			ps.setInt(3, p);
-			ps.setString(4, e);
-			ps.setInt(5, uid);
-
-			// Step 6: perform the query on the database using the prepared statement
-			int i = ps.executeUpdate();
-
-			// Step 7: check if the query had been successfully execute, return “You are
-			// successfully registered” via the response,
-			if (i > 0) {
-				PrintWriter writer = response.getWriter();
-				// writer.println("<h1>" + "You have successfully registered an account!" +
-				// "</h1>");
-				response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
-				writer.close();
-			}
-		}
-
-		// Step 8: catch and print out any exception
-		catch (Exception exception) {
-			System.out.println(exception);
-			out.close();
-		}
-		// doGet(request, response);
+		int i = CreateTransaction(n, p, e, uid);
+		if (i > 0) {
+            PrintWriter writer = response.getWriter();
+            // writer.println("<h1>" + "You have successfully registered an account!" +
+            // "</h1>");
+            response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+            writer.close();
+        }
 	}
 
 	// Step 5: listUsers function to connect to the database and retrieve all users
 	// records
-	private void listUsers(HttpServletRequest request, HttpServletResponse response)
+	public void listUsers(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
-		List<TransactionClass> users = new ArrayList<>();
-		try (Connection connection = getConnection();
-
-				// Step 5.1: Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TRANSACTION);) {
-			// System.out.println(uid);
-			// System.out.println("userID");
-			// Step 5.2: Execute the query or update query
-			ResultSet rs = preparedStatement.executeQuery();
-
-			// Step 5.3: Process the ResultSet object.
-			while (rs.next()) {
-				int UserID = rs.getInt("userid");
-				if (UserID == uid) {
-					int TransactionID = rs.getInt("transactionID");
-					String name = rs.getString("name");
-					int price = rs.getInt("price");
-					String payment = rs.getString("payment");
-					// System.out.println(TransactionID);
-					users.add(new TransactionClass(TransactionID, name, price, payment, UserID));
-				}
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-		// Step 5.4: Set the users list into the listUsers attribute to be pass to the
-		// userManagement.jsp
+		List<TransactionClass> users = RetrieveTransaction(uid);
+		//TransactionClass Transaction = users.add(RetrieveTransaction(uid));
+		//RetrieveTransaction(uid);
 		request.setAttribute("listUsers", users);
 		System.out.println(users);
 		request.getRequestDispatcher("/Transaction.jsp").forward(request, response);
@@ -213,7 +153,7 @@ public class TransactionServlet extends HttpServlet {
 	// Update - Show Edit Form
 	// method to get parameter, query database for existing user data and redirect
 	// to user edit page
-	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+	public void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		int TransactionID = Integer.parseInt((request.getParameter("transactionID")));
 		// int price = Integer.parseInt((request.getParameter("price")));
@@ -256,8 +196,8 @@ public class TransactionServlet extends HttpServlet {
 
 	// Update
 	// method to update the user table base on the form data
-	private void updateTransaction(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException {
+	public void updateTransaction(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
 
 		// Step 1: Retrieve value from the request
 		int TransactionID = Integer.parseInt((request.getParameter("TransactionID")));
@@ -266,9 +206,107 @@ public class TransactionServlet extends HttpServlet {
 		int price = Integer.parseInt((request.getParameter("price")));
 		String payment = request.getParameter("payment");
 		int UserID = Integer.parseInt((request.getParameter("UserID")));
+		
+		if(UpdateTransaction(TransactionID, name, price, payment, UserID) == true) {
+			response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+		}
+	}
 
-		// Step 2: Attempt connection with database and execute update user SQL query
+	// Delete
+	// method to delete user
+	public void deleteTransaction(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		// Step 1: Retrieve value from the request
+		// System.out.println(Integer.parseInt(request.getParameter("transactionID")));
+		int TransactionID = Integer.parseInt(request.getParameter("transactionID"));
+		
+		if (DeleteTransaction(TransactionID) == true){
+		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+		}
+	
+	}
+
+	// For Logging Out
+	public void LogOutUser(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		HttpSession session = request.getSession();
+		session.removeAttribute("userID");
+		session.removeAttribute("username");
+		session.invalidate();
+		System.out.println("You are logged out");
+		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+
+	}
+
+	public int CreateTransaction(String n, int p, String e, int uid) 
+	{
+		int i = 0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root",
+					"password");
+
+			// Step 4: implement the sql query using prepared statement
+			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
+			PreparedStatement ps = con.prepareStatement("insert into transaction values(?,?,?,?,?)");
+			// Step 5: parse in the data retrieved from the web form request into the
+			// prepared statement accordingly
+			ps.setInt(1, 0);
+			ps.setString(2, n);
+			ps.setInt(3, p);
+			ps.setString(4, e);
+			ps.setInt(5, uid);
+
+			// Step 6: perform the query on the database using the prepared statement
+			i = ps.executeUpdate();
+
+			// Step 7: check if the query had been successfully execute, return ï¿½You are
+			// successfully registeredï¿½ via the response,
+			return i;
+		}
+
+		// Step 8: catch and print out any exception
+		catch (Exception exception) {
+			System.out.println(exception);
+		}
+		return i;
+	}
+
+	public List<TransactionClass> RetrieveTransaction(int uid) {
+		List<TransactionClass> users = new ArrayList<>();
+//		TransactionClass Transaction = new TransactionClass(0, "", 0, "", 0);
 		try (Connection connection = getConnection();
+
+				// Step 5.1: Create a statement using connection object
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TRANSACTION);) {
+			// System.out.println(uid);
+			// System.out.println("userID");
+			// Step 5.2: Execute the query or update query
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int UserIDs = rs.getInt("userid");
+				if (UserIDs == uid) {
+					int TransactionIDs = rs.getInt("transactionID");
+					String names = rs.getString("name");
+					int prices = rs.getInt("price");
+					String payments = rs.getString("payment");
+					// System.out.println(TransactionID);
+					//users.add(new TransactionClass(TransactionIDs, names, prices, payments, UserIDs));
+					users.add(new TransactionClass(TransactionIDs, names, prices, payments, UserIDs));
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return users;
+	}
+
+	public boolean UpdateTransaction(int TransactionID, String name, int price, String payment, int UserID) 
+			{
+		try (Connection connection = getConnection();
+				// Step 5.1: Create a statement using connection object
 				PreparedStatement statement = connection.prepareStatement(UPDATE_TRANSACTION_SQL);) {
 			statement.setInt(1, TransactionID);
 			statement.setString(2, name);
@@ -280,40 +318,20 @@ public class TransactionServlet extends HttpServlet {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		// Step 3: redirect back to UserServlet (note: remember to change the url to
-		// your project name)
-		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+		return true;
 	}
 
-	// Delete
-	// method to delete user
-	private void deleteTransaction(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException {
-		// Step 1: Retrieve value from the request
-		// System.out.println(Integer.parseInt(request.getParameter("transactionID")));
-		int TransactionID = Integer.parseInt(request.getParameter("transactionID"));
-		System.out.println(TransactionID);
-		// Step 2: Attempt connection with database and execute delete user SQL query
+	public boolean DeleteTransaction(int TransactionID) 
+		{
 		try (Connection connection = getConnection();
-				PreparedStatement statement = connection.prepareStatement(DELETE_TRANSACTION_SQL);) {
+			PreparedStatement statement = connection.prepareStatement(DELETE_TRANSACTION_SQL);) {
 			statement.setInt(1, TransactionID);
 			int i = statement.executeUpdate();
 		}
-		// Step 3: redirect back to UserServlet dashboard (note: remember to change the
-		// url to your project name)
-		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
-	}
-
-	// For Logging Out
-	private void LogOutUser(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		HttpSession session = request.getSession();
-		session.removeAttribute("userID");
-		session.removeAttribute("username");
-		session.invalidate();
-		System.out.println("You are logged out");
-		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
-
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return true;
 	}
 
 }
