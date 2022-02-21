@@ -37,7 +37,7 @@ body {
 			<div class="card-body">
 				
 				<p style="text-align: left;">
-					<a href="/FinancialDiary/Login.jsp">Back to Login</a>
+					<a href="<%=request.getContextPath()%>/Login.jsp">Back to Login</a>
 				</p>
 
 				<form action="RegisterServlet" method="post">
