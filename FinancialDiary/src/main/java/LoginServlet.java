@@ -30,9 +30,9 @@ import java.sql.PreparedStatement;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
-	private String jdbcUsername = "root";
-	private String jdbcPassword = "password";
+	private static String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
+	private static String jdbcUsername = "root";
+	private static String jdbcPassword = "password";
 
 	//using email, password
 //	private static final String INSERT_USERS_SQL = "INSERT INTO UserDetails"
@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 	private static final String LOGIN_USER_SQL = "SELECT * FROM user WHERE username = ? and password = ?";
 	
 	//implementing the getConnection method which facilitate connection to database via JDBC
-	protected Connection getConnection() {
+	protected static Connection getConnection() {
 		 Connection connection = null;
 		 try {
 		 Class.forName("com.mysql.jdbc.Driver");
@@ -123,15 +123,99 @@ public class LoginServlet extends HttpServlet {
 
 	
 	// for login
-	private void loginUsers(HttpServletRequest request, HttpServletResponse response)
+	public void loginUsers(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
-		
+		// 1st
 		HttpSession session = request.getSession();
 		
 		
 		String enterUsername = request.getParameter("username");
 		String enterPassword = request.getParameter("password");
 		System.out.println("1. Get from login form");
+		
+		// 2nd
+		UserClass getLogin = loginUserFunction(enterUsername, enterPassword);
+		
+		// 3rd
+		if (getLogin.getUserID() == 0) {
+			System.out.println("Wrong username or password");
+			response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+		}
+		if (getLogin.getUserID() != 0) {
+			if (getLogin.getUsername().equals(enterUsername) && (getLogin.getPassword().equals(enterPassword)));
+			int uid = getLogin.getUserID();
+			String username = getLogin.getUsername();
+			
+			//SetAttribute() is to save an object in session by assigning a unique string
+			// to the object.
+			session.setAttribute("userID", uid);
+			session.setAttribute("username", username);
+			session.setAttribute("isLoggedIn", true);
+			
+			// getAttribute() the object is to save an object in session by assigning a unique string
+			// session using getAttribute method
+			session.getAttribute("userID");
+			session.getAttribute("username");
+			session.getAttribute("isLoggedIn");
+			System.out.println("userID is: " + session.getAttribute("userID"));
+			System.out.println("username is: " + session.getAttribute("username"));
+			response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+			
+		}
+		
+//		try (Connection connection = getConnection(); 
+//				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_USER_SQL);) {
+//			
+//			preparedStatement.setString(1, enterUsername);
+//			preparedStatement.setString(2, enterPassword);
+//			ResultSet rs = preparedStatement.executeQuery();
+//			
+//			if (rs.next()) {
+//				if (rs.getString("username").equals(enterUsername)
+//						&& (rs.getString("password").equals(enterPassword))) {
+//					
+//					int uid = rs.getInt("userID");
+//					String username = rs.getString("username");
+//					System.out.println("2. Username and password correct. " + "Username = " + username + " userID = " + uid);
+//					
+//					// setAttribute() is to save an object in session by assigning a unique string to the object.
+//					session.setAttribute("userID", uid);
+//					System.out.println("3.1. Set userID in session storage");
+//					
+//					session.setAttribute("username", username);
+//					System.out.println("3.2. Set username in session storage");
+//					
+//					session.setAttribute("isLoggedIn", true);
+//					System.out.println("3.3. Set isLoggedIn = True in session storage");
+//					
+//					// getAttribute() the object stored by setAttribute method is fetched from session using getAttribute method
+//					session.getAttribute("userID");
+//					System.out.println("4.1. Get userID from session storage");
+//					
+//					session.getAttribute("username");
+//					System.out.println("4.2. Get username from session storage");
+//					
+//					session.getAttribute("isLoggedIn");
+//					System.out.println("4.3. Get isLoggedIn from session storage");
+//					
+//					
+//					response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+//					System.out.println("5. Successful Redirect");
+//					//response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
+//				}
+//			} else {
+//				System.out.println("Wrong username or password");
+//				response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
+//			}
+//		}
+//		
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
+	}
+	
+	public static UserClass loginUserFunction (String enterUsername, String enterPassword){
+		UserClass getLogin = new UserClass (0, enterUsername, enterPassword, "", "", "");
 		
 		try (Connection connection = getConnection(); 
 				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_USER_SQL);) {
@@ -141,48 +225,25 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			if (rs.next()) {
-				if (rs.getString("username").equals(enterUsername)
-						&& (rs.getString("password").equals(enterPassword))) {
-					
-					int uid = rs.getInt("userID");
-					String username = rs.getString("username");
-					System.out.println("2. Username and password correct. " + "Username = " + username + " userID = " + uid);
-					
-					// setAttribute() is to save an object in session by assigning a unique string to the object.
-					session.setAttribute("userID", uid);
-					System.out.println("3.1. Set userID in session storage");
-					
-					session.setAttribute("username", username);
-					System.out.println("3.2. Set username in session storage");
-					
-					session.setAttribute("isLoggedIn", true);
-					System.out.println("3.3. Set isLoggedIn = True in session storage");
-					
-					// getAttribute() the object stored by setAttribute method is fetched from session using getAttribute method
-					session.getAttribute("userID");
-					System.out.println("4.1. Get userID from session storage");
-					
-					session.getAttribute("username");
-					System.out.println("4.2. Get username from session storage");
-					
-					session.getAttribute("isLoggedIn");
-					System.out.println("4.3. Get isLoggedIn from session storage");
-					
-					
-					response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
-					System.out.println("5. Successful Redirect");
-					//response.sendRedirect("http://localhost:8090/FinancialDiary/Profile?UserID=" + uid);
-				}
-			} else {
-				System.out.println("Wrong username or password");
-				response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");
-			}
+				int userID = rs.getInt("userID");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String email = rs.getString("email");
+				String firstname = rs.getString("firstname");
+				String lastname = rs.getString("lastname");
+				System.out.println("value: " + userID + username+ password+ email);
+				getLogin = new UserClass(userID, username, password, email, firstname, lastname);
+		
+				
+			} 
 		}
 		
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		return getLogin;
+		
 	}
-
-
 }
+
+
