@@ -16,26 +16,26 @@ public class ProjTest {
       
  
       // Get to the register page
-      driver.get("http://localhost:8090/FinancialDiary/Register.jsp");
+//      driver.get("http://localhost:8090/FinancialDiary/Register.jsp");
       
       //register
-      driver.findElement(By.name("username")).sendKeys("selenium");
-      driver.findElement(By.name("password")).sendKeys("123");
-      driver.findElement(By.name("email")).sendKeys("selenium@gmail.com");
-      driver.findElement(By.name("firstname")).sendKeys("selenium");
-      driver.findElement(By.name("lastname")).sendKeys("test");
+//      driver.findElement(By.name("username")).sendKeys("selenium");
+//      driver.findElement(By.name("password")).sendKeys("123");
+//      driver.findElement(By.name("email")).sendKeys("selenium@gmail.com");
+//      driver.findElement(By.name("firstname")).sendKeys("selenium");
+//      driver.findElement(By.name("lastname")).sendKeys("test");
 
-      Thread.sleep(2000); 
-      driver.findElement(By.name("register")).click();
+//      Thread.sleep(2000); 
+//      driver.findElement(By.name("register")).click();
       
    // Get to the login page
       driver.get("http://localhost:8090/FinancialDiary/Login.jsp");
       Thread.sleep(2000);
       
     //Login
-      driver.findElement(By.name("username")).sendKeys("selenium");
+      driver.findElement(By.name("username")).sendKeys("dennis");
       Thread.sleep(2000);
-      driver.findElement(By.name("password")).sendKeys("123");
+      driver.findElement(By.name("password")).sendKeys("123456");
       Thread.sleep(2000); 
       driver.findElement(By.name("login")).click();
       Thread.sleep(2000);
