@@ -79,7 +79,7 @@ body, html {
 }
 </style>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Profile</title>
 </head>
 <body>
 	<div class="hero-image">
@@ -104,17 +104,17 @@ body, html {
 		<div class="container">
 			<h3 class="text-center">Account Information</h3>
 			<hr>
-			<a href="<%=request.getContextPath()%>/TransactionServlet/dashboard" class="nav-link">Back to Dashboard</a>
+			<a style="float: left;" href="<%=request.getContextPath()%>/TransactionServlet/dashboard" class="nav-link">Back to Dashboard</a>
 			<!-- Create a table to list out all current users information -->
 			<table class="table" id="myTable">
 				<thead>
 					<tr>
-						<th>User ID</th>
+						<th hidden>User ID</th>
 						<th>Username</th>
-						<th>Password</th>
+						<th hidden>Password</th>
 						<th>Email</th>
-						<th>Firstname</th>
-						<th>Lastname</th>
+						<th>First Name</th>
+						<th>Last Name</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -124,20 +124,17 @@ body, html {
 						<!-- For each user in the database, display their
 information accordingly -->
 						<tr>
-							<td><c:out value="${user.userID}" /></td>
+							<td hidden><c:out value="${user.userID}" /></td>
 							<td><c:out value="${user.username}" /></td>
-							<td><c:out value="${user.password}" /></td>
+							<td hidden><c:out value="${user.password}" /></td>
 							<td><c:out value="${user.email}" /></td>
 							<td><c:out value="${user.firstname}" /></td>
 							<td><c:out value="${user.lastname}" /></td>
 							<!-- For each user in the database, Edit/Delete
 buttons which invokes the edit/delete functions -->
-							<td><a
-								href="edit?username=<c:out value='${user.username}'
-/>">Edit</a>
-								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?username=<c:out
-value='${user.username}' />">Delete</a>
+							<td><a href="edit?username=<c:out value='${user.username}'/>">Edit</a>
+								&nbsp;&nbsp;&nbsp;&nbsp; 
+								<a href="delete?username=<c:out value='${user.username}'/>">Delete</a>
 							</td>
 						</tr>
 					</c:forEach>

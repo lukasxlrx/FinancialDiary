@@ -167,8 +167,8 @@ public class TransactionServlet extends HttpServlet {
 			// Step 6: perform the query on the database using the prepared statement
 			int i = ps.executeUpdate();
 
-			// Step 7: check if the query had been successfully execute, return “You are
-			// successfully registered” via the response,
+			// Step 7: check if the query had been successfully execute, return â€œYou are
+			// successfully registeredâ€� via the response,
 
 			if (i > 0) {
 				PrintWriter writer = response.getWriter();
@@ -205,7 +205,7 @@ public class TransactionServlet extends HttpServlet {
 
 			// Step 5.3: Process the ResultSet object.
 			while (rs.next()) {
-				int UserID = rs.getInt("userid");
+				int UserID = rs.getInt("user_id");
 				if (UserID == uid) {
 					int TransactionID = rs.getInt("transactionID");
 					String name = rs.getString("name");
@@ -252,13 +252,13 @@ public class TransactionServlet extends HttpServlet {
 				String name = rs.getString("name");
 				int price = rs.getInt("price");
 				String payment = rs.getString("payment");
-				int UserID = rs.getInt("userid");
+				int UserID = rs.getInt("user_id");
 				System.out.println(rs.getInt("transactionID"));
 				System.out.println(rs.getString("name"));
 				System.out.println(rs.getInt("price"));
 				System.out.println(rs.getString("payment"));
-				System.out.println("user id" + UserID);
-				System.out.println(rs.getInt("userid"));
+				System.out.println("user_id" + UserID);
+				System.out.println(rs.getInt("user_id"));
 				System.out.println(uid);
 				System.out.println(session.getAttribute("userID"));
 				existingTransaction = new TransactionClass(TransactionID, name, price, payment, UserID);
@@ -328,7 +328,6 @@ public class TransactionServlet extends HttpServlet {
 			throws SQLException, IOException, ServletException {
 		HttpSession session = request.getSession();
 		session.removeAttribute("userID");
-		session.removeAttribute("username");
 		session.invalidate();
 		System.out.println("You are logged out");
 		response.sendRedirect("http://localhost:8090/FinancialDiary/Login.jsp");

@@ -38,7 +38,7 @@ public class ProfileServlet extends HttpServlet {
 	private static final String SELECT_USER_BY_ID = "select * from user where userID = ?";
 	private static final String DELETE_USERS_SQL = "delete from user where username = ?;";
 	private static final String UPDATE_USERS_SQL = "update user set userID = ?,username = ?,password= ?, email =?,firstname =?, lastname=? where username = ?;";
-
+	
 	// Step 3: Implement the getConnection method which facilitates connection to
 	// the database via JDBC
 	protected Connection getConnection() {
@@ -161,7 +161,6 @@ public class ProfileServlet extends HttpServlet {
 		}
 		HttpSession session = request.getSession();
 		session.removeAttribute("userID");
-		session.removeAttribute("username");
 		session.invalidate();
 		// Step 3: redirect back to UserServlet dashboard (note: remember to change the
 		// url to your project name)

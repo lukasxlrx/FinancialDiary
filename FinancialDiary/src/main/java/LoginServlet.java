@@ -91,8 +91,6 @@ public class LoginServlet extends HttpServlet {
 			case "LoginServlet/logout":
 				System.out.println("hi logout");
 //				LogOutUser(request, response);
-
-
 				break;
 			case "/delete":
 				break;
@@ -152,18 +150,12 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("userID", uid);
 					System.out.println("3.1. Set userID in session storage");
 					
-					session.setAttribute("username", username);
-					System.out.println("3.2. Set username in session storage");
-					
 					session.setAttribute("isLoggedIn", true);
 					System.out.println("3.3. Set isLoggedIn = True in session storage");
 					
 					// getAttribute() the object stored by setAttribute method is fetched from session using getAttribute method
 					session.getAttribute("userID");
 					System.out.println("4.1. Get userID from session storage");
-					
-					session.getAttribute("username");
-					System.out.println("4.2. Get username from session storage");
 					
 					session.getAttribute("isLoggedIn");
 					System.out.println("4.3. Get isLoggedIn from session storage");
