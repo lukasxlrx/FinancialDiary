@@ -33,9 +33,4 @@ class RegisterServletJunitTest {
 		assertTrue(i > 0);
 	}
 
-	@Test
-	void testDoPostHttpServletRequestHttpServletResponse() {
-		//fail("Not yet implemented");
-	}
-
 }
