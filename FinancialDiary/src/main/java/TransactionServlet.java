@@ -321,7 +321,7 @@ public class TransactionServlet extends HttpServlet {
 		}
 		return true;
 	}
-	//testing again and again and again
+	//testing 
 	public boolean DeleteTransaction(int TransactionID) 
 		{
 		try (Connection connection = getConnection();
