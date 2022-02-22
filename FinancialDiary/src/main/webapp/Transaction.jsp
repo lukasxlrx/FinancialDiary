@@ -52,7 +52,7 @@
 
 					</tr>
 				</thead>
-				<!-- Pass in the list of users receive via the Servletâs response to a loop -->
+				<!-- Pass in the list of users receive via the Servlets response to a loop -->
 
 				<tbody>
 					<c:forEach var="users" items="${listUsers}">

@@ -13,7 +13,7 @@
 <body>
 	<nav class="navbar navbar-expand-md navbar-light">
 		<div>
-			<a class="navbar-brand"> User Management Application </a>
+			<a class="navbar-brand"> Transaction Management </a>
 		</div>
 		<ul class="navbar-nav">
 			<li><a href="<%=request.getContextPath()%>/TransactionServlet/dashboard" class="nav-link">Back to Dashboard</a></li>
