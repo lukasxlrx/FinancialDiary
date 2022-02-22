@@ -130,7 +130,7 @@ public class TransactionServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             // writer.println("<h1>" + "You have successfully registered an account!" +
             // "</h1>");
-            response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+            response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
             writer.close();
         }
 	}
@@ -208,7 +208,7 @@ public class TransactionServlet extends HttpServlet {
 		int UserID = Integer.parseInt((request.getParameter("UserID")));
 		
 		if(UpdateTransaction(TransactionID, name, price, payment, UserID) == true) {
-			response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+			response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
 		}
 	}
 
@@ -221,7 +221,7 @@ public class TransactionServlet extends HttpServlet {
 		int TransactionID = Integer.parseInt(request.getParameter("transactionID"));
 		
 		if (DeleteTransaction(TransactionID) == true){
-		response.sendRedirect("http://localhost:8090/FinancialDiary/TransactionServlet/dashboard");
+		response.sendRedirect("/FinancialDiary/TransactionServlet/dashboard");
 		}
 	
 	}
