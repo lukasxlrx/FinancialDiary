@@ -40,7 +40,7 @@
               style="padding-left: 2.5rem; padding-right: 2.5rem;" name= "login">Login</button>
               
             <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
-            <a href="http://localhost:8090/FinancialDiary/Register.jsp" class="link-danger">Register</a></p>
+            <a href="<%=request.getContextPath()%>/Register.jsp" class="link-danger">Register</a></p>
           </div>
 
         </form>

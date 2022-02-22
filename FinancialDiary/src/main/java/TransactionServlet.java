@@ -142,6 +142,7 @@ public class TransactionServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		int uid = (int) session.getAttribute("userID");
+		System.out.println(uid);
 		List<TransactionClass> users = RetrieveTransaction(uid);
 		//TransactionClass Transaction = users.add(RetrieveTransaction(uid));
 		//RetrieveTransaction(uid);
@@ -284,7 +285,7 @@ public class TransactionServlet extends HttpServlet {
 			// System.out.println("userID");
 			// Step 5.2: Execute the query or update query
 			ResultSet rs = preparedStatement.executeQuery();
-
+			System.out.println(uid);
 			while (rs.next()) {
 				int UserIDs = rs.getInt("userid");
 				if (UserIDs == uid) {
