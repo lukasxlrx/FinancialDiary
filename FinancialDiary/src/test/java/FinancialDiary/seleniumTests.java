@@ -15,7 +15,7 @@ public class seleniumTests {
       driver.manage().window().maximize();
 
       // Get to the Login page
-      driver.get("http://localhost:8090/FinancialDiary/Login.jsp");
+      driver.get("http://localhost:8091/FinancialDiary/Login.jsp");
 
       
       //Click on register button
