@@ -320,7 +320,7 @@ public class TransactionServlet extends HttpServlet {
 		}
 		return true;
 	}
-
+	//testing
 	public boolean DeleteTransaction(int TransactionID) 
 		{
 		try (Connection connection = getConnection();
