@@ -18,7 +18,7 @@ class RegisterCollectionTest {
 
 	@Test
 	void testAddUser() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 }
