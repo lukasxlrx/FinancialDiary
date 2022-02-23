@@ -9,7 +9,8 @@ public class seleniumTests {
 
 	private WebDriver driver;
 
-	@Test
+	//Register a new account
+	@Test (priority = 1)
 	public void testRegister() throws InterruptedException {
 		// Get to the Login page
 		driver.get("http://localhost:8090/FinancialDiary/Login.jsp");
@@ -27,7 +28,11 @@ public class seleniumTests {
 
 		Thread.sleep(2000);
 		driver.findElement(By.name("register")).click();
+	}
 
+	//Prove account was created
+	@Test (priority = 2)
+	public void proveRegistration() throws InterruptedException {
 		// Login
 		Thread.sleep(2000);
 		driver.findElement(By.name("username")).sendKeys("seleniumtest");
@@ -39,6 +44,7 @@ public class seleniumTests {
 		// Navigate to profile to show account details after login and registration
 		Thread.sleep(2000);
 		driver.findElement(By.linkText("Profile")).click();
+		Thread.sleep(2000);
 	}
 
 	@BeforeTest
@@ -51,6 +57,8 @@ public class seleniumTests {
 
 	@AfterTest
 	public void afterTest() {
+		// Quit the ChromeDriver and close all associated window at the end of test
+		driver.quit();
 	}
 
 }
