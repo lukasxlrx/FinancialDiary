@@ -6,8 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.By;
 
 public class seleniumTests {
-	// public void f() throws InterruptedException {
-	// }
 
 	private WebDriver driver;
 
@@ -47,7 +45,7 @@ public class seleniumTests {
 	public void beforeTest() {
 		String chromeDriverDir = "C:\\Program Files (x86)\\Google\\Chrome\\chromedriver.exe";
 		System.setProperty("webdriver.chrome.driver", chromeDriverDir);
-		WebDriver driver = new ChromeDriver();
+		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 	}
 
