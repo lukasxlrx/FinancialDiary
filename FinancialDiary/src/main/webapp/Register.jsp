@@ -67,7 +67,7 @@ body {
 							class="form-control form-control-lg">
 					</div>
 
-					<button type="submit" class="btn btn-primary btn-lg">Register</button>
+					<button type="submit" name="register" class="btn btn-primary btn-lg">Register</button>
 				</form>
 
 			</div>
