@@ -32,8 +32,7 @@ public class TransactionServlet extends HttpServlet {
 	// Step 2: Prepare list of SQL prepared statements to perform CRUD to our
 	// database
 
-	private static final String INSERT_TRANSACTION_SQL = "INSERT INTO transaction"
-			+ " (transactionid, name, price, payment) VALUES " + " (?, ?, ?);";
+	private static final String INSERT_TRANSACTION_SQL = "INSERT INTO transaction" + " (transactionid, name, price, payment) VALUES " + " (?, ?, ?);";
 	private static final String SELECT_TRANSACTION_BY_ID = "select transactionid ,name, price, payment, userid from transaction where transactionid = ?";
 	private static final String SELECT_ALL_TRANSACTION = "select * from transaction ";
 	private static final String DELETE_TRANSACTION_SQL = "delete from transaction where transactionid = ?;";
@@ -289,6 +288,7 @@ public class TransactionServlet extends HttpServlet {
 			while (rs.next()) {
 				int UserIDs = rs.getInt("userid");
 				if (UserIDs == uid) {
+					//System.out.println("Existed users");
 					int TransactionIDs = rs.getInt("transactionID");
 					String names = rs.getString("name");
 					int prices = rs.getInt("price");
@@ -321,7 +321,7 @@ public class TransactionServlet extends HttpServlet {
 		}
 		return true;
 	}
-	//testing 
+	//testing and again
 	public boolean DeleteTransaction(int TransactionID) 
 		{
 		try (Connection connection = getConnection();
