@@ -16,7 +16,7 @@ public class seleniumTests {
 		driver.get("http://localhost:8090/FinancialDiary/Login.jsp");
 
 		// Click on register button
-		Thread.sleep(2000);
+		Thread.sleep(2500);
 		driver.findElement(By.linkText("Register")).click();
 
 		// Register
