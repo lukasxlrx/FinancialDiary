@@ -244,6 +244,22 @@ public class LoginServlet extends HttpServlet {
 		return getLogin;
 		
 	}
+//	//boolean function for login
+//	public boolean loginBoolFunction (int userID, String enterUsername, String enterPassword)
+//	{
+//		try (Connection connection = getConnection(); 
+//				PreparedStatement preparedStatement = connection.prepareStatement(LOGIN_USER_SQL);) {
+//			preparedStatement.setInt(1, userID);
+//			preparedStatement.setString(2, enterUsername);
+//			preparedStatement.setString(3, enterPassword);
+//			int i = preparedStatement.executeUpdate();
+//		} catch (Exception e){
+//			System.out.println(e.getMessage());
+//		}
+//		return true;
+//	
+//	}
 }
+
 
 
