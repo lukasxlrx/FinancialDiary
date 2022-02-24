@@ -5,6 +5,7 @@
     <classes>
       <class name="seleniumTests">
         <methods>
+          <include name="proveRegistration"/>
           <include name="testRegister"/>
           <include name="beforeTest"/>
           <include name="afterTest"/>
