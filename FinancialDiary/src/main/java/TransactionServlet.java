@@ -206,6 +206,7 @@ public class TransactionServlet extends HttpServlet {
 			// Step 5.3: Process the ResultSet object.
 			while (rs.next()) {
 				int UserID = rs.getInt("user_id");
+				System.out.println("retrieve transaction "+UserID);
 				if (UserID == uid) {
 					int TransactionID = rs.getInt("transactionID");
 					String name = rs.getString("name");

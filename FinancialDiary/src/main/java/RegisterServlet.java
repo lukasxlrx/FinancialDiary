@@ -10,6 +10,9 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -18,6 +21,26 @@ import static javax.swing.JOptionPane.showMessageDialog;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	private String jdbcURL = "jdbc:mysql://localhost:3306/financialdiary";
+	private String jdbcUsername = "root";
+	private String jdbcPassword = "password";
+
+
+	// implementing the getConnection method which facilitate connection to database
+	// via JDBC
+	protected Connection getConnection() {
+		Connection connection = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return connection;
+	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -41,15 +64,10 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	
-	public int register(String username, String password, String email, String firstname, String lastname)
-	{
-		
+
+	public int register(String username, String password, String email, String firstname, String lastname) {
 		int i = 0;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/financialdiary", "root",
-					"password");
+		try (Connection con = getConnection();) {
 
 			// Step 4: implement the sql query using prepared statement
 			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
@@ -64,10 +82,12 @@ public class RegisterServlet extends HttpServlet {
 			ps.setString(5, firstname);
 			ps.setString(6, lastname);
 
+
 			// Step 6: perform the query on the database using the prepared statement
 			i = ps.executeUpdate();
-			
+
 			return i;
+
 		}
 
 		// Step 8: catch and print out any exception
@@ -76,9 +96,8 @@ public class RegisterServlet extends HttpServlet {
 		}
 		return i;
 	}
-	
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
 		response.setContentType("text/html");
@@ -93,21 +112,17 @@ public class RegisterServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
-		
+
 		int i = register(username, password, email, firstname, lastname);
-		
+
 		if (i > 0) {
 			response.sendRedirect("/FinancialDiary/Login.jsp");
-		}
-		else {
-			//alert("Unsuccessful Registration. Please try again.");
+		} else {
 			showMessageDialog(null, "Unsuccessful Registration.");
 			response.sendRedirect("/FinancialDiary/Register.jsp");
 		}
-		
+
 		doGet(request, response);
 	}
-	
-}
-	
 
+}
