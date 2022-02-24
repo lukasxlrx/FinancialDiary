@@ -34,7 +34,7 @@ class TransactionServletTest {
 		name = "Dao Yuan";
 		price = 2;
 		payment = "Ez-Link";
-		UserID = 4;
+		UserID = 1;
 		FakeUserID = 0;
 	}
 
