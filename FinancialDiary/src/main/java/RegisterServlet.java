@@ -65,7 +65,7 @@ public class RegisterServlet extends HttpServlet {
 	 *      response)
 	 */
 	
-	//Split register function | testing again
+	//Split register function
 	public int register(String username, String password, String email, String firstname, String lastname) {
 		int i = 0;
 		try (Connection con = getConnection();) {
