@@ -30,7 +30,7 @@ public class seleniumTests {
 		driver.findElement(By.name("register")).click();
 	}
 
-	//Prove account was created
+	//Prove account was created.
 	@Test (priority = 2)
 	public void proveRegistration() throws InterruptedException {
 		// Login
