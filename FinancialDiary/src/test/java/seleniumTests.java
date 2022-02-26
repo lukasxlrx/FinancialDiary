@@ -15,7 +15,7 @@ public class seleniumTests {
 		// Get to the Login page
 		driver.get("http://localhost:8090/FinancialDiary/Login.jsp");
 
-		// Click on register button. Testing auto build
+		// Click on register button
 		Thread.sleep(2000);
 		driver.findElement(By.linkText("Register")).click();
 
