@@ -40,6 +40,7 @@ public class TransactionServlet extends HttpServlet {
 
 	// Step 3: Implement the getConnection method which facilitates connection to
 	// the database via JDBC
+	//Hello
 	protected Connection getConnection() {
 		Connection connection = null;
 		try {
