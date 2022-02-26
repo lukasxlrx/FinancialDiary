@@ -68,7 +68,6 @@ public class RegisterServlet extends HttpServlet {
 			// Step 4: implement the sql query using prepared statement
 			// (https://docs.oracle.com/javase/tutorial/jdbc/basics/prepared.html)
 			PreparedStatement ps = con.prepareStatement("insert into USER values(?,?,?,?,?,?)");
-
 			// Step 5: parse in the data retrieved from the web form request into the
 			// prepared statement accordingly
 			ps.setInt(1, 0);
